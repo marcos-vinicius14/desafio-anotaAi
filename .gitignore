@@ -1,0 +1,40 @@
+# Compiled source #
+*.com
+*.class
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
+
+# Include dlls if they’re in the NuGet packages directory
+!/packages/*
+!/packages/lib/*
+
+# Include dlls if they're in the CommonReferences directory
+!CommonReferences/*
+
+# Directories #
+bin/
+obj/
+TestResults/
+
+# Web publish log #
+*.Publish.xml
+
+# ReSharper #
+/_ReSharper.*
+/[Tt]est[Rr]esult*/
+/*.suo
+/*.user
+/*.cache
+/*.resharper
+/*packages
+/*NuGet.exe
+/*Scripts
+/**.exe
+/**.dll
+/**.nupkg
+/**.ncrunchsolution
+/**.dotcover
