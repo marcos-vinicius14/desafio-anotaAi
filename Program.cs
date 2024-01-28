@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using DesafioAnotaAi.Data;
+using DesafioAnotaAi.Services;
 using Microsoft.EntityFrameworkCore;
+using RestSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -9,8 +11,6 @@ ConfigureMvc(builder);
 ConfigureServices(builder);
 
 var app = builder.Build();
-
-
 
 app.UseHttpsRedirection();
 app.MapControllers();
@@ -38,4 +38,5 @@ void ConfigureServices(WebApplicationBuilder builder)
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
 
+    builder.Services.AddScoped<CategoryServices>();
 }
