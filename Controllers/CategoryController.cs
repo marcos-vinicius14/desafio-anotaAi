@@ -49,5 +49,13 @@ public class CategoryController : ControllerBase
 
         return Ok(new ResultViewModels<CategoryModel>(category));
     }
+
+    [HttpDelete("/v1/categories/{id:int}")]
+    public async Task<IActionResult> DeleteCategoryAsync(
+        [FromRoute] int id)
+    {
+        await _services.DeleteCategoryAsync(id);
+        return Ok();
+    }
 }
 

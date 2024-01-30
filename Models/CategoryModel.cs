@@ -11,6 +11,10 @@ public class CategoryModel
     public int OwnerId { get; set; }
     public List<ProductModel> ListProducts { get; set; } = new();
 
+    public CategoryModel()
+    {
+        
+    }
     public CategoryModel(CategoryViewModel model)
     {
         Title = model.Title;

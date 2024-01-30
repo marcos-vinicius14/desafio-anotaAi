@@ -59,4 +59,18 @@ public class CategoryServices
 
          return category;
     }
+
+    public async Task<CategoryModel> DeleteCategoryAsync(int id)
+    {
+        var categoryForDelete = await _context
+            .Categories
+            .FirstOrDefaultAsync(x => x.Id == id);
+        if (categoryForDelete is null)
+            throw new Exception("Categoria não encontrada.");
+
+        _context.Categories.Remove(categoryForDelete);
+        await _context.SaveChangesAsync();
+
+         return categoryForDelete;
+    }
 }
