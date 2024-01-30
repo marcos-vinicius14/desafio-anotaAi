@@ -39,6 +39,24 @@ public class CategoryServices
             throw new Exception("Categoria não encontrada");
 
         return categories;
+    }
+
+    public async Task<CategoryModel> UpdateCategoryAsync(int id,
+        CategoryViewModel? model)
+    {
+        var category = await _context
+            .Categories
+            .FirstOrDefaultAsync(x => x.Id == id);
         
+        if(category is null)
+            throw new Exception("A categoria não existe");
+
+        category.Title = model.Title;
+        category.Description = model.Description;
+
+         _context.Categories.Update(category);
+         await _context.SaveChangesAsync();
+
+         return category;
     }
 }
