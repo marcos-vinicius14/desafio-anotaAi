@@ -1,6 +1,7 @@
 ﻿using DesafioAnotaAi.Data;
 using DesafioAnotaAi.Model;
 using DesafioAnotaAi.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using RestSharp;
 
 namespace DesafioAnotaAi.Services;
@@ -25,5 +26,19 @@ public class CategoryServices
         await _context.SaveChangesAsync();
 
         return category;
+    }
+
+    public async Task<List<CategoryModel>> GetAllCategoriesAsync()
+    {
+        var categories = await _context
+            .Categories
+            .AsNoTracking()
+            .ToListAsync();
+
+        if (categories is null)
+            throw new Exception("Categoria não encontrada");
+
+        return categories;
+        
     }
 }

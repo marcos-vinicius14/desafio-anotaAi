@@ -15,7 +15,7 @@ public class CategoryController : ControllerBase
         _services = services;
     }
     
-    [HttpPost("v1/create-categories")]
+    [HttpPost("v1/categories")]
     public async Task<IActionResult> CreateCategory(
         [FromBody] CategoryViewModel? model)
     {
@@ -28,6 +28,13 @@ public class CategoryController : ControllerBase
         var category = await _services.CreateCategoryAsync(model);
 
         return Created($"v1/create-categories/{category.Id}", category);
+    }
+
+    [HttpGet("v1/categories")]
+    public async Task<IActionResult> GetCategoriesAsync()
+    {
+        var categories = await _services.GetAllCategoriesAsync();
+        return Ok(new ResultViewModels<List<CategoryModel>>(categories));
     }
 }
 
