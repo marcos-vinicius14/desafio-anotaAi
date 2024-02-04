@@ -17,15 +17,30 @@ public class CategoryServices
     
     public async Task<CategoryModel> CreateCategoryAsync(CategoryViewModel model)
     {
-        var category = new CategoryModel(model);
+        try
+        {
+            var category = new CategoryModel(model);
 
-        if (category is null)
-            throw new Exception("Não foi possível criar a categoria");
+            if (category is null)
+                throw new Exception("Não foi possível criar a categoria");
 
-        await _context.Categories.AddAsync(category);
-        await _context.SaveChangesAsync();
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
 
-        return category;
+            return category;
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new ArgumentNullException("Não foi possível criar a categoria!:", ex);
+        }
+        catch (DbUpdateException ex)
+        {
+            throw new DbUpdateException("Não foi possível criar a categoria:", ex);
+        }
+        catch
+        {
+            throw new Exception("Falha interna no servidor");
+        }
     }
 
     public async Task<List<CategoryModel>> GetAllCategoriesAsync()
@@ -39,6 +54,18 @@ public class CategoryServices
             throw new Exception("Categoria não encontrada");
 
         return categories;
+    }
+
+    public async Task<CategoryModel> GetCategoryByIdAsync(int id)
+    {
+        var category = await _context
+            .Categories
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (category is null)
+            throw new Exception("Categoria não encontrada!");
+
+        return category;
     }
 
     public async Task<CategoryModel> UpdateCategoryAsync(int id,
